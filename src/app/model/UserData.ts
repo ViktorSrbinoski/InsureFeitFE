@@ -1,11 +1,11 @@
 export class UserData {
-  areaCode: string;
-  powerOfCar: string;
-  vehicleAge: string;
-  driverAge: string;
-  bonusMalus: string;
-  carBrand: string;
-  carGas: string;
-  populationDensity: string;
-  region: string;
+  Area: string;
+  VehPower: string;
+  VehAge: string;
+  DrivAge: string;
+  BonusMalus: string;
+  VehBrand: string;
+  VehGas: string;
+  Density: string;
+  Region: string;
 }

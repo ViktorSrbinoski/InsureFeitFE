@@ -1,60 +1,76 @@
 <div class="myHeaderBar"></div>
 <div class="container bit-down">
   <h3>Enter client details</h3>
-  <br/>
-
   <form>
     <div class="row">
       <div class="col-md-4">
+        <br/>
+        <br/>
         <div class="form-group">
           <label>Area code:</label>
-          <select class="form-control" name="areaCode" [(ngModel)]="enteredData.areaCode">
-            <option value="0">A</option>
-            <option value="1">B</option>
-            <option value="2">C</option>
-            <option value="3">D</option>
-            <option value="4">E</option>
-            <option value="5">F</option>
+          <select class="form-control" name="areaCode" [(ngModel)]="enteredData.Area">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
           </select>
         </div>
         <div class="form-group">
           <label>Power of car:</label>
-          <input type="text" class="form-control" name="powerOfCar" [(ngModel)]="enteredData.powerOfCar">
+          <input type="text" class="form-control" name="powerOfCar" [(ngModel)]="enteredData.VehPower">
         </div>
         <div class="form-group">
           <label>Vehicle age:</label>
-          <input type="text" class="form-control" name="vehicleAge" [(ngModel)]="enteredData.vehicleAge">
+          <input type="text" class="form-control" name="vehicleAge" [(ngModel)]="enteredData.VehAge">
         </div>
         <div class="form-group">
           <label>Driver age:</label>
-          <input type="text" class="form-control" name="driverAge" [(ngModel)]="enteredData.driverAge">
+          <input type="text" class="form-control" name="driverAge" [(ngModel)]="enteredData.DrivAge">
         </div>
         <div class="form-group">
           <label>Bonus/Malus:</label>
-          <input type="text" class="form-control" name="bonusMalus" [(ngModel)]="enteredData.bonusMalus">
+          <input type="text" class="form-control" name="bonusMalus" [(ngModel)]="enteredData.BonusMalus">
         </div>
+        <br/>
+        <br/>
+        <button type="button" class="btn btn-primary" (click)="onSendMessage()">Calculate risk factor</button>
 
       </div>
       <div class="col-md-4">
-
+        <br/>
+        <br/>
         <div class="form-group">
           <label>Car brand:</label>
-          <input type="text" class="form-control" name="carBrand" [(ngModel)]="enteredData.carBrand">
+          <select class="form-control" name="areaCode" [(ngModel)]="enteredData.VehBrand">
+            <option value="B12">Toyota</option>
+            <option value="B6">Opel</option>
+            <option value="B3">Mercedes</option>
+            <option value="B2">BMW</option>
+            <option value="B5">Audi</option>
+            <option value="B10">Volkswagen</option>
+            <option value="B14">Honda</option>
+            <option value="B13">Lada</option>
+            <option value="B4">Citroen</option>
+            <option value="B1">Renault</option>
+            <option value="B11">Mazda</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Car gas:</label>
-          <select class="form-control" name="carGas" [(ngModel)]="enteredData.carGas">
-            <option value="1">Petrol</option>
-            <option value="0">Diesel</option>
+          <select class="form-control" name="carGas" [(ngModel)]="enteredData.VehGas">
+            <option value="Regular">Petrol</option>
+            <option value="Diesel">Diesel</option>
           </select>
         </div>
         <div class="form-group">
           <label>Population density:</label>
-          <input type="text" class="form-control" name="populationDensity" [(ngModel)]="enteredData.populationDensity">
+          <input type="text" class="form-control" name="populationDensity" [(ngModel)]="enteredData.Density">
         </div>
         <div class="form-group">
           <label>Region:</label>
-          <select class="form-control" name="region" [(ngModel)]="enteredData.region">
+          <select class="form-control" name="region" [(ngModel)]="enteredData.Region">
             <option value="R82">R82</option>
             <option value="R22">R22</option>
             <option value="R72">R72</option>
@@ -80,24 +96,88 @@
           </select>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="progress-circle p{{percentage}}" [ngClass]="{'over50': percentage>50}" [hidden]="hideResult">
-          <span>{{percentage}}%</span>
-          <div class="left-half-clipper">
-            <div class="first50-bar"></div>
-            <div class="value-bar"></div>
+      <div class="col-md-4" [hidden]="hideResult">
+
+        <div class="row">
+          <h3 class="claimDiv">Calculated claim rate: <span [ngClass]="{'greenT': frequency<1, 'redT': frequency>=1}">{{frequency}}</span></h3>
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 0 claims:</div>
+            <div class="progress-circle p{{prob0R}}" [ngClass]="{'over50': prob0>50, 'biggestPercentage':prob0==findBiggest()}">
+              <span>{{prob0T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 1 claim:</div>
+            <div class="progress-circle p{{prob1R}}" [ngClass]="{'over50': prob1>50, 'biggestPercentage':prob1==findBiggest()}">
+              <span>{{prob1T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 2 claims:</div>
+            <div class="progress-circle p{{prob2R}}" [ngClass]="{'over50': prob2>50, 'biggestPercentage':prob2==findBiggest()}">
+              <span>{{prob2T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 3 claims:</div>
+            <div class="progress-circle p{{prob3R}}" [ngClass]="{'over50': prob3>50, 'biggestPercentage':prob3==findBiggest()}">
+              <span>{{prob3T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 4 claims:</div>
+            <div class="progress-circle p{{prob4R}}" [ngClass]="{'over50': prob4>50, 'biggestPercentage':prob4==findBiggest()}">
+              <span>{{prob4T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="myTitle">Probability of 5 or more claims:</div>
+            <div class="progress-circle p{{prob5R}}" [ngClass]="{'over50': prob5>50, 'biggestPercentage':prob5==findBiggest()}">
+              <span>{{prob5T}}%</span>
+              <div class="left-half-clipper">
+                <div class="first50-bar"></div>
+                <div class="value-bar"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
-    <br/>
-    <button type="button" class="btn btn-primary" (click)="onSendMessage()">Calculate risk factor</button>
+
   </form>
   <br/>
-  <h2>Received messages</h2>
-  <ol>
-    <!-- we will use Angular binding to populate list of messages -->
-    <li class="message" *ngFor="let message of receivedMessages">{{message}}</li>
-  </ol>
+  <br/>
+  <!--<br/>-->
+  <!--<h2>Received messages</h2>-->
+  <!--<ol>-->
+    <!--&lt;!&ndash; we will use Angular binding to populate list of messages &ndash;&gt;-->
+    <!--<li class="message" *ngFor="let message of receivedMessages">{{message}}</li>-->
+  <!--</ol>-->
 </div>
