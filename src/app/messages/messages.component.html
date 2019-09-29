@@ -1,0 +1,103 @@
+<div class="myHeaderBar"></div>
+<div class="container bit-down">
+  <h3>Enter client details</h3>
+  <br/>
+
+  <form>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Area code:</label>
+          <select class="form-control" name="areaCode" [(ngModel)]="enteredData.areaCode">
+            <option value="0">A</option>
+            <option value="1">B</option>
+            <option value="2">C</option>
+            <option value="3">D</option>
+            <option value="4">E</option>
+            <option value="5">F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Power of car:</label>
+          <input type="text" class="form-control" name="powerOfCar" [(ngModel)]="enteredData.powerOfCar">
+        </div>
+        <div class="form-group">
+          <label>Vehicle age:</label>
+          <input type="text" class="form-control" name="vehicleAge" [(ngModel)]="enteredData.vehicleAge">
+        </div>
+        <div class="form-group">
+          <label>Driver age:</label>
+          <input type="text" class="form-control" name="driverAge" [(ngModel)]="enteredData.driverAge">
+        </div>
+        <div class="form-group">
+          <label>Bonus/Malus:</label>
+          <input type="text" class="form-control" name="bonusMalus" [(ngModel)]="enteredData.bonusMalus">
+        </div>
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="form-group">
+          <label>Car brand:</label>
+          <input type="text" class="form-control" name="carBrand" [(ngModel)]="enteredData.carBrand">
+        </div>
+        <div class="form-group">
+          <label>Car gas:</label>
+          <select class="form-control" name="carGas" [(ngModel)]="enteredData.carGas">
+            <option value="1">Petrol</option>
+            <option value="0">Diesel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Population density:</label>
+          <input type="text" class="form-control" name="populationDensity" [(ngModel)]="enteredData.populationDensity">
+        </div>
+        <div class="form-group">
+          <label>Region:</label>
+          <select class="form-control" name="region" [(ngModel)]="enteredData.region">
+            <option value="R82">R82</option>
+            <option value="R22">R22</option>
+            <option value="R72">R72</option>
+            <option value="R31">R31</option>
+            <option value="R91">R91</option>
+            <option value="R52">R52</option>
+            <option value="R93">R93</option>
+            <option value="R11">R11</option>
+            <option value="R24">R24</option>
+            <option value="R94">R94</option>
+            <option value="R83">R83</option>
+            <option value="R54">R54</option>
+            <option value="R26">R26</option>
+            <option value="R53">R53</option>
+            <option value="R73">R73</option>
+            <option value="R42">R42</option>
+            <option value="R25">R25</option>
+            <option value="R21">R21</option>
+            <option value="R41">R41</option>
+            <option value="R43">R43</option>
+            <option value="R74">R74</option>
+            <option value="R23">R23</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="progress-circle p{{percentage}}" [ngClass]="{'over50': percentage>50}" [hidden]="hideResult">
+          <span>{{percentage}}%</span>
+          <div class="left-half-clipper">
+            <div class="first50-bar"></div>
+            <div class="value-bar"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br/>
+    <button type="button" class="btn btn-primary" (click)="onSendMessage()">Calculate risk factor</button>
+  </form>
+  <br/>
+  <h2>Received messages</h2>
+  <ol>
+    <!-- we will use Angular binding to populate list of messages -->
+    <li class="message" *ngFor="let message of receivedMessages">{{message}}</li>
+  </ol>
+</div>
